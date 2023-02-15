@@ -4,8 +4,8 @@ let monner = document.querySelector('.monner');
 
 monner.style.left = Math.floor(Math.random() * window.innerWidth - monner.offsetWidth) + monner.offsetWidth;
 monner.style.top = Math.floor(Math.random() * window.innerHeight - monner.offsetHeight) + monner.offsetHeight;
-let xSpeed = 4;
-let ySpeed = 4;
+let xSpeed = 3;
+let ySpeed = 3;
 
 console.log(monner.offsetHeight)
 

@@ -30,4 +30,4 @@ setInterval(() => {
 
     monner.style.left = monner.offsetLeft +  xSpeed + 'px';
     monner.style.top = monner.offsetTop + ySpeed + 'px';
-}, 1000/60)
+}, 1000/fps)

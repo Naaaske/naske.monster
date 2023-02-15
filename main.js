@@ -34,12 +34,22 @@ monner.onclick = function(){
     window.open('https://www.twitch.tv/naaaske', '_blank');
 }
 
+function MonnerToUrl(monner){
+    return 'monnere/' + monner + '.webp';
+}
+
+function PreLoadMonnere(){
+    monnere.forEach(element => {
+        new Image().src = MonnerToUrl(element);
+    });
+}
+
 function SetMonner(newMonner) {
     if(!monnere.includes(newMonner)){
         console.log('I dont have a monner called "' + newMonner + '" :(');
         return;
     }
-    monner.src = 'monnere/' + newMonner + '.webp';
+    monner.src = MonnerToUrl(newMonner);
 }
 
 function GetRandomMonner() {
@@ -92,7 +102,7 @@ setInterval(() => {
 
     if (xCol !== 0 || yCol !== 0){
         timeDifference = Math.abs(xCol - yCol);
-        if (timeDifference <= 50) {
+        if (timeDifference <= 30) {
             window.location.href = atob('aHR0cHM6Ly9kaXNjb3JkLmdnL05mR0hwYXY4emU=');
             xCol = 0;
             yCol = 0;

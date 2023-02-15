@@ -6,15 +6,13 @@
 
 body {
     overflow: hidden;
-    background-color: black;
+    background-color: #1b1b1b;
 }
 
-section{
-    position: relative;
-}
-
-.monner{
+#monner{
     transform-origin: top left;
     position: absolute;
-    width: 150px;
+    height: 344px;
+    width: 137px;
+    cursor: pointer;
 }

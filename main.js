@@ -92,7 +92,7 @@ setInterval(() => {
 
     if (xCol !== 0 || yCol !== 0){
         timeDifference = Math.abs(xCol - yCol);
-        if (timeDifference <= 25) {
+        if (timeDifference <= 45) {
             window.location.href = atob('aHR0cHM6Ly9kaXNjb3JkLmdnL05mR0hwYXY4emU=');
             xCol = 0;
             yCol = 0;

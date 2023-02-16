@@ -13,25 +13,9 @@ var paused = false;
 function Init(){
     SetMonner(monnere.sample())
 
-    initXpos = RandomRange(100, window.innerWidth - monner.offsetWidth - 100)
-    initYpos = RandomRange(100, window.innerHeight - monner.offsetHeight - 100)
+    Respawn();
 
-    if(initXpos < window.innerWidth/2){
-        xSpeed = speed;
-    }
-    else{
-        xSpeed = -speed;
-    }
-
-    if(initYpos > window.innerHeight/2){
-        ySpeed = speed;
-    }
-    else{
-        ySpeed = -speed;
-    }
-
-    monner.style.left = initXpos;
-    monner.style.top = initYpos;
+    EnsureSize();
 
     //Start frame function
     setInterval(() => Update(), 1000/fps)
@@ -85,7 +69,7 @@ function Update(){
 
     if (xCol !== 0 || yCol !== 0){
         timeDifference = Math.abs(xCol - yCol);
-        if (timeDifference <= 20) {
+        if (timeDifference <= 10) {
             window.location.href = atob('aHR0cHM6Ly9kaXNjb3JkLmdnL05mR0hwYXY4emU=');
             xCol = 0;
             yCol = 0;
@@ -139,21 +123,51 @@ function RandomFloatRange(min, max){
     return Math.random() * (max - min + 1) + min;
 }
 
+function Respawn(){
+    initXpos = RandomRange(100, window.innerWidth - monner.offsetWidth - 100)
+    initYpos = RandomRange(100, window.innerHeight - monner.offsetHeight - 100)
 
-monner.onclick = function(){
-    window.open('https://www.twitch.tv/naaaske', '_blank');
+    monner.style.left = initXpos;
+    monner.style.top = initYpos;
+    
+    MoveTowardsCenter();
 }
 
-window.onresize = function(){
+function MoveTowardsCenter(){
+    if(monner.offsetLeft + monner.offsetWidth / 2 > window.innerWidth/2){
+        xSpeed = -speed;
+    }
+    else{
+        xSpeed = speed;
+    }
+
+    if(monner.offsetTop + monner.offsetHeight / 2 > window.innerHeight/2){
+        ySpeed = -speed;
+    }
+    else{
+        ySpeed = speed;
+    }
+}
+
+function EnsureSize(){
     if (window.innerWidth < 940 || window.innerHeight < 600 || window.innerWidth * window.innerHeight < 940 * 600){
         paused = true;
         cheating.style.opacity = 1;
     }
     else{
+        if (paused == true){
+            MoveTowardsCenter();   
+        }
         paused = false;
         cheating.style.opacity = 0;
     }
 }
+
+monner.onclick = function(){
+    window.open('https://www.twitch.tv/naaaske', '_blank');
+}
+
+window.onresize = EnsureSize
 
 window.onload = function WindowLoad(event) {
     PreLoadMonnere();

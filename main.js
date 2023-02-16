@@ -1,34 +1,82 @@
-Array.prototype.sample = function(){
-    return this[Math.floor(Math.random()*this.length)];
-}
-
-function randomRange(min, max){
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 const fps = 60;
 const monnere = ['og', 'hvid', 'mango', 'fiestaMango', 'rehabPeach'];
-const speed = 3;
+const speed = 50 / fps;
 
 let monner = document.getElementById('monner');
-SetMonner(monnere.sample())
+let xCol = 0;
+let yCol = 0;
+let xSpeed, ySpeed = 0;
 
-initXpos = randomRange(100, window.innerWidth - monner.offsetWidth - 100)
-initYpos = randomRange(100, window.innerHeight - monner.offsetHeight - 100)
+function Init(){
+    SetMonner(monnere.sample())
 
-let xSpeed = speed;
-if(initXpos > window.innerWidth/2){
-    xSpeed = -xSpeed;
+    initXpos = randomRange(100, window.innerWidth - monner.offsetWidth - 100)
+    initYpos = randomRange(100, window.innerHeight - monner.offsetHeight - 100)
+
+    if(initXpos < window.innerWidth/2){
+        xSpeed = speed;
+    }
+    else{
+        xSpeed = -speed;
+    }
+
+    if(initYpos > window.innerHeight/2){
+        ySpeed = speed;
+    }
+    else{
+        ySpeed = -speed;
+    }
+
+    monner.style.left = initXpos;
+    monner.style.top = initYpos;
+
+    //Start frame function
+    setInterval(() => Update(), 1000/fps)
 }
 
-let ySpeed = speed;
-if(initYpos > window.innerHeight/2){
-    ySpeed = -ySpeed;
+function Update(){
+    if(monner.offsetLeft <= 0){
+        ChangeToRandomMonner()
+        monner.style.left = 0;
+        xSpeed = -xSpeed;
+        xCol = Date.now();
+    }
+
+    else if(monner.offsetLeft + monner.offsetWidth >= window.innerWidth){
+        ChangeToRandomMonner()
+        monner.style.left = window.innerWidth - monner.offsetWidth;
+        xSpeed = -xSpeed;
+        
+        xCol = Date.now();
+    }
+
+    if(monner.offsetTop <= 0){
+        ChangeToRandomMonner()
+        monner.style.top = 0;
+        ySpeed = -ySpeed;
+
+        yCol = Date.now();
+    }
+    else if (monner.offsetTop + monner.offsetHeight >= window.innerHeight){
+        ChangeToRandomMonner()
+        monner.style.top = window.innerHeight - monner.offsetHeight;
+        ySpeed = -ySpeed;
+
+        yCol = Date.now();
+    }
+
+    if (xCol !== 0 || yCol !== 0){
+        timeDifference = Math.abs(xCol - yCol);
+        if (timeDifference <= 30) {
+            //window.location.href = atob('aHR0cHM6Ly9kaXNjb3JkLmdnL05mR0hwYXY4emU=');
+            xCol = 0;
+            yCol = 0;
+        }
+    }
+
+    monner.style.left = monner.offsetLeft +  xSpeed + 'px';
+    monner.style.top = monner.offsetTop + ySpeed + 'px';
 }
-
-monner.style.left = initXpos;
-monner.style.top = initYpos;
-
 
 monner.onclick = function(){
     window.open('https://www.twitch.tv/naaaske', '_blank');
@@ -65,54 +113,17 @@ function ChangeToRandomMonner(){
     SetMonner(GetRandomMonner());
 }
 
-let xCol = 0;
-let yCol = 0;
+Array.prototype.sample = function(){
+    return this[Math.floor(Math.random()*this.length)];
+}
 
-setInterval(() => {
-
-    if(monner.offsetLeft <= 0){
-        ChangeToRandomMonner()
-        monner.style.left = 0;
-        xSpeed = -xSpeed;
-        xCol = Date.now();
-    }
-
-    else if(monner.offsetLeft + monner.offsetWidth >= window.innerWidth){
-        ChangeToRandomMonner()
-        monner.style.left = window.innerWidth - monner.offsetWidth;
-        xSpeed = -xSpeed;
-        
-        xCol = Date.now();
-    }
-
-    if(monner.offsetTop <= 0){
-        ChangeToRandomMonner()
-        monner.style.top = 0;
-        ySpeed = -ySpeed;
-
-        yCol = Date.now();
-    }
-    else if (monner.offsetTop + monner.offsetHeight >= window.innerHeight){
-        ChangeToRandomMonner()
-        monner.style.top = window.innerHeight - monner.offsetHeight;
-        ySpeed = -ySpeed;
-
-        yCol = Date.now();
-    }
-
-    if (xCol !== 0 || yCol !== 0){
-        timeDifference = Math.abs(xCol - yCol);
-        if (timeDifference <= 15) {
-            window.location.href = atob('aHR0cHM6Ly9kaXNjb3JkLmdnL05mR0hwYXY4emU=');
-            xCol = 0;
-            yCol = 0;
-        }
-    }
-
-    monner.style.left = monner.offsetLeft +  xSpeed + 'px';
-    monner.style.top = monner.offsetTop + ySpeed + 'px';
-}, 1000/fps)
+function randomRange(min, max){
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 window.onload = function WindowLoad(event) {
     PreLoadMonnere();
+    Init();
+    //Start frame function
+    setInterval(() => Update(), 1000/fps)
 }

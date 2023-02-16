@@ -35,15 +35,18 @@ function Init(){
 }
 
 function Update(){
+
+    //Process collision
+    didCollide = false;
+
     if(monner.offsetLeft <= 0){
-        ChangeToRandomMonner()
+        didCollide = true;
         monner.style.left = 0;
         xSpeed = -xSpeed;
         xCol = Date.now();
     }
-
     else if(monner.offsetLeft + monner.offsetWidth >= window.innerWidth){
-        ChangeToRandomMonner()
+        didCollide = true;
         monner.style.left = window.innerWidth - monner.offsetWidth;
         xSpeed = -xSpeed;
         
@@ -51,24 +54,32 @@ function Update(){
     }
 
     if(monner.offsetTop <= 0){
-        ChangeToRandomMonner()
+        didCollide = true;
         monner.style.top = 0;
         ySpeed = -ySpeed;
 
         yCol = Date.now();
     }
     else if (monner.offsetTop + monner.offsetHeight >= window.innerHeight){
-        ChangeToRandomMonner()
+        didCollide = true;
         monner.style.top = window.innerHeight - monner.offsetHeight;
         ySpeed = -ySpeed;
 
         yCol = Date.now();
     }
 
+    if(didCollide){
+        ChangeToRandomMonner()
+        didCollide = false;
+
+        // Slight
+    }
+
+
     if (xCol !== 0 || yCol !== 0){
         timeDifference = Math.abs(xCol - yCol);
-        if (timeDifference <= 30) {
-            //window.location.href = atob('aHR0cHM6Ly9kaXNjb3JkLmdnL05mR0hwYXY4emU=');
+        if (timeDifference <= 15) {
+            window.location.href = atob('aHR0cHM6Ly9kaXNjb3JkLmdnL05mR0hwYXY4emU=');
             xCol = 0;
             yCol = 0;
         }
@@ -115,6 +126,11 @@ function ChangeToRandomMonner(){
 
 Array.prototype.sample = function(){
     return this[Math.floor(Math.random()*this.length)];
+}
+
+function GetUnitVector(x, y){
+    magnitude = Math.sqrt(x*x + y*y);
+    return [x/magnitude, y/magnitude];
 }
 
 function randomRange(min, max){

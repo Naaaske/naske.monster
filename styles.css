@@ -12,7 +12,13 @@ body {
 #monner{
     transform-origin: top left;
     position: absolute;
+    aspect-ratio: 137 / 344;
     height: 344px;
-    width: 137px;
     cursor: pointer;
+    filter: drop-shadow(0px 0px 0px transparent);
+    transition: filter ease-in-out 0.25s;
+}
+
+#monner:hover{ 
+    filter: drop-shadow(0px 0px 30px rgba(145, 70, 255, 0.4));
 }

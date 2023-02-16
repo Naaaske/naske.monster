@@ -10,8 +10,8 @@ let xSpeed, ySpeed = 0;
 function Init(){
     SetMonner(monnere.sample())
 
-    initXpos = randomRange(100, window.innerWidth - monner.offsetWidth - 100)
-    initYpos = randomRange(100, window.innerHeight - monner.offsetHeight - 100)
+    initXpos = RandomRange(100, window.innerWidth - monner.offsetWidth - 100)
+    initYpos = RandomRange(100, window.innerHeight - monner.offsetHeight - 100)
 
     if(initXpos < window.innerWidth/2){
         xSpeed = speed;
@@ -34,6 +34,8 @@ function Init(){
     setInterval(() => Update(), 1000/fps)
 }
 
+lowestT = 500;
+
 function Update(){
 
     //Process collision
@@ -42,13 +44,14 @@ function Update(){
     if(monner.offsetLeft <= 0){
         didCollide = true;
         monner.style.left = 0;
-        xSpeed = -xSpeed;
+        xSpeed = -xSpeed
+
         xCol = Date.now();
     }
     else if(monner.offsetLeft + monner.offsetWidth >= window.innerWidth){
         didCollide = true;
         monner.style.left = window.innerWidth - monner.offsetWidth;
-        xSpeed = -xSpeed;
+        xSpeed = -xSpeed
         
         xCol = Date.now();
     }
@@ -56,14 +59,14 @@ function Update(){
     if(monner.offsetTop <= 0){
         didCollide = true;
         monner.style.top = 0;
-        ySpeed = -ySpeed;
+        ySpeed = -ySpeed
 
         yCol = Date.now();
     }
     else if (monner.offsetTop + monner.offsetHeight >= window.innerHeight){
         didCollide = true;
         monner.style.top = window.innerHeight - monner.offsetHeight;
-        ySpeed = -ySpeed;
+        ySpeed = -ySpeed
 
         yCol = Date.now();
     }
@@ -71,14 +74,11 @@ function Update(){
     if(didCollide){
         ChangeToRandomMonner()
         didCollide = false;
-
-        // Slight
     }
-
 
     if (xCol !== 0 || yCol !== 0){
         timeDifference = Math.abs(xCol - yCol);
-        if (timeDifference <= 15) {
+        if (timeDifference <= 20) {
             window.location.href = atob('aHR0cHM6Ly9kaXNjb3JkLmdnL05mR0hwYXY4emU=');
             xCol = 0;
             yCol = 0;
@@ -128,13 +128,12 @@ Array.prototype.sample = function(){
     return this[Math.floor(Math.random()*this.length)];
 }
 
-function GetUnitVector(x, y){
-    magnitude = Math.sqrt(x*x + y*y);
-    return [x/magnitude, y/magnitude];
+function RandomRange(min, max){
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function randomRange(min, max){
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+function RandomFloatRange(min, max){
+    return Math.random() * (max - min + 1) + min;
 }
 
 window.onload = function WindowLoad(event) {

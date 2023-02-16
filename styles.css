@@ -35,7 +35,7 @@ p{
     color: white;
     opacity: 0;
     text-align: center;
-    text-shadow: 3px 3px blueviolet;
+    text-shadow: 3px 3px #000fff;
     word-break: break-all;
     white-space: normal;
 }

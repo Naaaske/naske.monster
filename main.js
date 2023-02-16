@@ -3,9 +3,12 @@ const monnere = ['og', 'hvid', 'mango', 'fiestaMango', 'rehabPeach'];
 const speed = 50 / fps;
 
 let monner = document.getElementById('monner');
+let cheating = document.getElementById('cheating');
 let xCol = 0;
 let yCol = 0;
 let xSpeed, ySpeed = 0;
+
+var paused = false;
 
 function Init(){
     SetMonner(monnere.sample())
@@ -71,6 +74,10 @@ function Update(){
         yCol = Date.now();
     }
 
+    if(paused){
+        return;
+    }
+
     if(didCollide){
         ChangeToRandomMonner()
         didCollide = false;
@@ -87,10 +94,6 @@ function Update(){
 
     monner.style.left = monner.offsetLeft +  xSpeed + 'px';
     monner.style.top = monner.offsetTop + ySpeed + 'px';
-}
-
-monner.onclick = function(){
-    window.open('https://www.twitch.tv/naaaske', '_blank');
 }
 
 function MonnerToUrl(monner){
@@ -134,6 +137,22 @@ function RandomRange(min, max){
 
 function RandomFloatRange(min, max){
     return Math.random() * (max - min + 1) + min;
+}
+
+
+monner.onclick = function(){
+    window.open('https://www.twitch.tv/naaaske', '_blank');
+}
+
+window.onresize = function(){
+    if (window.innerWidth < 940 || window.innerHeight < 600 || window.innerWidth * window.innerHeight < 940 * 600){
+        paused = true;
+        cheating.style.opacity = 1;
+    }
+    else{
+        paused = false;
+        cheating.style.opacity = 0;
+    }
 }
 
 window.onload = function WindowLoad(event) {

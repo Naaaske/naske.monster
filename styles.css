@@ -13,7 +13,9 @@ body {
     transform-origin: top left;
     position: absolute;
     aspect-ratio: 137 / 344;
-    height: 344px;
+    max-height: 344px;
+    max-width: 137px;
+    height: 40%;
     cursor: pointer;
     filter: drop-shadow(0px 0px 0px transparent);
     transition: filter ease-in-out 0.25s;
@@ -25,6 +27,7 @@ body {
 }
 
 p{
+    pointer-events: none;
     position: fixed; /* or absolute */
     top: 50%;
     left: 50%;

@@ -1,6 +1,7 @@
 const fps = 60;
 const monnere = ['og', 'hvid', 'mango', 'fiestaMango', 'rehabPeach'];
 const speed = 50 / fps;
+const newSpeed = 0.4 / fps;
 
 let monner = document.getElementById('monner');
 let cheating = document.getElementById('cheating');
@@ -76,8 +77,8 @@ function Update(){
         }
     }
 
-    monner.style.left = monner.offsetLeft +  xSpeed + 'px';
-    monner.style.top = monner.offsetTop + ySpeed + 'px';
+    monner.style.left = monner.offsetLeft +  xSpeed * monner.offsetWidth + 'px';
+    monner.style.top = monner.offsetTop + ySpeed * monner.offsetWidth + 'px';
 }
 
 function MonnerToUrl(monner){
@@ -135,22 +136,23 @@ function Respawn(){
 
 function MoveTowardsCenter(){
     if(monner.offsetLeft + monner.offsetWidth / 2 > window.innerWidth/2){
-        xSpeed = -speed;
+        xSpeed = -newSpeed;
     }
     else{
-        xSpeed = speed;
+        xSpeed = newSpeed;
     }
 
     if(monner.offsetTop + monner.offsetHeight / 2 > window.innerHeight/2){
-        ySpeed = -speed;
+        ySpeed = -newSpeed;
     }
     else{
-        ySpeed = speed;
+        ySpeed = newSpeed;
     }
 }
 
 function EnsureSize(){
-    if (window.innerWidth < 940 || window.innerHeight < 600 || window.innerWidth * window.innerHeight < 940 * 600){
+
+    if (window.innerWidth * window.innerHeight < 375 * 667){
         paused = true;
         cheating.style.opacity = 1;
     }
